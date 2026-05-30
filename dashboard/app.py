@@ -102,7 +102,7 @@ if page == "📊 Overview":
                      color_continuous_scale="Blues",
                      labels={"short_name": "Team", "win_pct": "Win %"},
                      text="win_pct")
-        fig.update_traces(texttemplate="%{text:.1f}%", textposition="outside")
+        fig.update_traces(texttemplate="%{text:.1f}%", textposition="outside", cliponaxis=False)
         fig.update_layout(showlegend=False, coloraxis_showscale=False,
                           plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
                           font_color="white", height=350)
@@ -125,7 +125,7 @@ if page == "📊 Overview":
                       color="toss_decision", color_discrete_map={"bat":"#60a5fa","field":"#34d399"},
                       text="win_pct_after_toss",
                       labels={"toss_decision": "Decision", "win_pct_after_toss": "Win % after Toss"})
-        fig3.update_traces(texttemplate="%{text:.1f}%", textposition="outside")
+        fig3.update_traces(texttemplate="%{text:.1f}%", textposition="outside", cliponaxis=False)
         fig3.update_layout(showlegend=False, plot_bgcolor="rgba(0,0,0,0)",
                            paper_bgcolor="rgba(0,0,0,0)", font_color="white", height=300)
         st.plotly_chart(fig3, use_container_width=True)
@@ -142,10 +142,9 @@ elif page == "🏆 Team Analytics":
     wr = load_win_rates()
 
     st.subheader("All-Time Win Rate Leaderboard")
-    styled = wr[["short_name","name","titles","matches_played","wins","win_pct","avg_score"]].copy()
+    styled = wr[["short_name","team","titles","matches_played","wins","win_pct","avg_score"]].copy()
     styled.columns = ["Code","Team","Titles 🏆","Played","Wins","Win %","Avg Score"]
-    st.dataframe(styled.style.background_gradient(subset=["Win %"], cmap="Blues")
-                 .format({"Win %": "{:.1f}%", "Avg Score": "{:.0f}"}),
+    st.dataframe(styled.style.format({"Win %": "{:.1f}%", "Avg Score": "{:.0f}"}),
                  use_container_width=True, height=400)
 
     st.subheader("Season Wins Heatmap")
@@ -189,8 +188,7 @@ elif page == "👤 Player Stats":
         fig.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
                           font_color="white", xaxis_tickangle=-30, height=400)
         st.plotly_chart(fig, use_container_width=True)
-        st.dataframe(bat.style.background_gradient(subset=["total_runs","avg_sr"], cmap="Blues")
-                     .format({"avg_runs":"{:.1f}","avg_sr":"{:.1f}","strike_rate":"{:.1f}"}),
+        st.dataframe(bat.style.format({"avg_runs":"{:.1f}","avg_sr":"{:.1f}","strike_rate":"{:.1f}"}),
                      use_container_width=True)
 
     with tab2:
@@ -203,8 +201,7 @@ elif page == "👤 Player Stats":
         fig2.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
                            font_color="white", height=420)
         st.plotly_chart(fig2, use_container_width=True)
-        st.dataframe(bow.style.background_gradient(subset=["total_wickets"], cmap="Greens")
-                     .format({"avg_economy":"{:.2f}","avg_overs":"{:.1f}"}),
+        st.dataframe(bow.style.format({"avg_economy":"{:.2f}","avg_overs":"{:.1f}"}),
                      use_container_width=True)
 
     with tab3:
