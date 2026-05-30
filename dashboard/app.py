@@ -2,8 +2,13 @@
 IPL Intelligence Platform — Streamlit Dashboard
 Run: streamlit run dashboard/app.py
 """
-import sys, os
+import sys, os, subprocess
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if not os.path.exists(os.path.join(BASE_DIR, "ipl.db")) or not os.path.exists(os.path.join(BASE_DIR, "ml", "win_predictor.pkl")):
+    subprocess.run(["python", "data/seed_data.py"], cwd=BASE_DIR)
+    subprocess.run(["python", "ml/predictor.py"], cwd=BASE_DIR)
 
 import streamlit as st
 import pandas as pd
