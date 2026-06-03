@@ -7,8 +7,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if not os.path.exists(os.path.join(BASE_DIR, "ipl.db")) or not os.path.exists(os.path.join(BASE_DIR, "ml", "win_predictor.pkl")):
-    subprocess.run(["python", "data/seed_data.py"], cwd=BASE_DIR)
-    subprocess.run(["python", "ml/predictor.py"], cwd=BASE_DIR)
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
+    subprocess.run([sys.executable, os.path.join(BASE_DIR, "data", "seed_data.py")], cwd=BASE_DIR, env=env, check=True)
+    subprocess.run([sys.executable, os.path.join(BASE_DIR, "ml", "predictor.py")], cwd=BASE_DIR, env=env, check=True)
 
 import streamlit as st
 import pandas as pd
