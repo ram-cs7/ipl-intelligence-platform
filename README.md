@@ -7,6 +7,15 @@
 [![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.5-orange)](https://scikit-learn.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
+### 🚀 Live Demo
+
+| Service | URL |
+|---|---|
+| **Dashboard** | [ipl-intelligence-platform.streamlit.app](https://ipl-intelligence-platform.streamlit.app/) |
+| **API Docs** | [ipl-intelligence-platform.onrender.com/docs](https://ipl-intelligence-platform.onrender.com/docs) |
+
+![IPL Intelligence Platform Dashboard](assets/demo.png)
+
 ## 📌 What This Project Demonstrates
 
 | Skill Area | What's Shown |
