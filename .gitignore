@@ -1,6 +1,4 @@
 __pycache__/
 *.pyc
-*.pkl
-ipl.db
 .env
 .venv/
