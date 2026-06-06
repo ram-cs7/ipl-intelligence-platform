@@ -2,9 +2,19 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from database.models import Base
 
-import os
+import os, shutil
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DB_PATH = os.path.join(BASE_DIR, "ipl.db")
+_SOURCE_DB = os.path.join(BASE_DIR, "ipl.db")
+
+# On Streamlit Cloud the source dir can be read-only; SQLite needs write
+# access for journal files even on SELECT queries.  Copy to /tmp if needed.
+if os.path.exists(_SOURCE_DB) and not os.access(os.path.dirname(_SOURCE_DB), os.W_OK):
+    DB_PATH = os.path.join("/tmp", "ipl.db")
+    if not os.path.exists(DB_PATH):
+        shutil.copy2(_SOURCE_DB, DB_PATH)
+else:
+    DB_PATH = _SOURCE_DB
+
 DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
